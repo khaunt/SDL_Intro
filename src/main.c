@@ -7,7 +7,7 @@ SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
 int last_frame_time = 0;
-
+int down = FALSE;
 
 struct ball {
 	float x;
@@ -60,10 +60,14 @@ void process_input() {
 			game_is_running = FALSE;
 			break;
 		case SDL_KEYDOWN:
-			if(event.key.keysym.sym == SDLK_ESCAPE) {
+			if (event.key.keysym.sym == SDLK_ESCAPE) {
 				game_is_running = FALSE;
 				break;
-		}
+			}
+			if (event.key.keysym.sym == SDLK_d) {
+				down = TRUE;
+				break;	
+			}
 	}
 }
 
@@ -81,8 +85,11 @@ void update() {
 
 	last_frame_time = SDL_GetTicks();
 	
-	ball.x += 30 * delta_time;
-	ball.y += 20 * delta_time;
+	//ball.x += 30 * delta_time;
+	if (down) {
+		ball.y += 50 * delta_time;
+		down = FALSE;
+	}
 }
 
 void render() {
