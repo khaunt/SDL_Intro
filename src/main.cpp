@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include "./constants.h"
+#include "./raquet.h"
 
 int game_is_running = FALSE;
 SDL_Window* window = NULL;
@@ -16,6 +17,8 @@ struct ball {
 	float height;
 } ball;
 
+raquet player_1 = {1};
+raquet player_2 = {2};
 
 int initialize_window(void) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -45,8 +48,8 @@ int initialize_window(void) {
 }
 
 void setup() {
-	ball.x = 20;
-	ball.y = 20;
+	ball.x = WINDOW_WIDTH/2;
+	ball.y = WINDOW_HEIGHT/2;
 	ball.width = 15;
 	ball.height = 15;
 }
@@ -63,10 +66,6 @@ void process_input() {
 			if (event.key.keysym.sym == SDLK_ESCAPE) {
 				game_is_running = FALSE;
 				break;
-			}
-			if (event.key.keysym.sym == SDLK_d) {
-				down = TRUE;
-				break;	
 			}
 	}
 }
@@ -85,11 +84,7 @@ void update() {
 
 	last_frame_time = SDL_GetTicks();
 	
-	//ball.x += 30 * delta_time;
-	if (down) {
-		ball.y += 50 * delta_time;
-		down = FALSE;
-	}
+	ball.x += 30 * delta_time;
 }
 
 void render() {
@@ -103,9 +98,25 @@ void render() {
 		(int)ball.width, 
 		(int)ball.height
 	};
+	SDL_Rect raq1 = {
+		(int)player_1.x,
+		(int)player_1.y,
+		(int)player_1.width,
+		(int)player_1.height
+	};
+	
+	SDL_Rect raq2 = {
+		(int)player_2.x,
+		(int)player_2.y,
+		(int)player_2.width,
+		(int)player_2.height
+	};
+	
+
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderFillRect(renderer, &ball_rect);
-
+	SDL_RenderFillRect(renderer, &raq1);
+	SDL_RenderFillRect(renderer, &raq2);
 	SDL_RenderPresent(renderer);
 
 		
