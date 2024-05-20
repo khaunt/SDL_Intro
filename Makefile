@@ -1,5 +1,5 @@
 build:
-	gcc -Wall src/*.c -std=c99 -lSDL2 -o game
+	g++ -Wall src/*.cpp -lSDL2 -o game
 run:
 	./game
 clear:
