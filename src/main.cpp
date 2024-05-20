@@ -84,7 +84,7 @@ void update() {
 
 	last_frame_time = SDL_GetTicks();
 	
-	ball.x += 30 * delta_time;
+	ball.x += 40 * delta_time;
 }
 
 void render() {
@@ -119,7 +119,7 @@ void render() {
 	SDL_RenderFillRect(renderer, &raq2);
 	SDL_RenderPresent(renderer);
 
-		
+	SDL_RenderClear(renderer);
 }
 
 void destroy_window() {
